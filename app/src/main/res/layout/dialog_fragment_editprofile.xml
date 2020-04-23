@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txtIntroduce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="35dp"
+        android:layout_centerHorizontal="true"
+        android:text="Edit Introdue"/>
+
+    <EditText
+        android:layout_below="@+id/txtIntroduce"
+        android:id="@+id/editTextProfile"
+        android:background="@drawable/custom_edittext"
+        android:layout_width="match_parent"
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:layout_height="50dp"
+        android:inputType="text"/>
+
+    <Button
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/editTextProfile"
+        android:id="@+id/btnOK"
+        android:layout_margin="10dp"
+        android:text="OK"
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/custom_button_login"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

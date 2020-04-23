@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/updateImg"
+        android:title="Update Image Group"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/addMember"
+        android:title="Add Member"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/leaveGroup"
+        android:title="Leave Group"
+        app:showAsAction="never"/>
+
+</menu>

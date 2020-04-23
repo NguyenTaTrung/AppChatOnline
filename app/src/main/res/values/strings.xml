@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AppChatOnline</string>
+    <string name="txt_login">Đăng nhập</string>
+    <string name="txt_username">Tài khoản</string>
+    <string name="txt_password">Mật Khẩu</string>
+    <string name="txt_telephone_number">Số điện thoại</string>
+    <string name="txt_hello">Xin chào</string>
+    <string name="choose_language">Chọn ngôn ngữ</string>
+    <string name="remember_information">Nhớ thông tin tài khoản</string>
+    <string name="txt_register">Đăng ký</string>
+    <string name="txt_back">Quay lại</string>
+    <string name="txt_confirm_password">Nhập lại mật khẩu</string>
+    <string name="txt_forgot_your_password">Bạn quên mật khẩu?</string>
+    <string name="txt_don_t_have_an_account">Bạn không có tài khoản:</string>
+    <string name="txt_register_here">Đăng ký!</string>
+    <string name="txt_ok">OK</string>
+    <string name="txt_dang_ky_thanh_cong">Đăng ký thành công!</string>
+    <string name="txt_profile">Profile</string>
+    <string name="txt_favourite">Favourite</string>
+    <string name="txt_home">Home</string>
+    <string name="txt_sort">Sắp xếp</string>
+
+    <!--Start Toast notification-->
+    <string name="toast_account_already_exists">Tài khoản đã tồn tại</string>
+    <string name="toast_not_enough_information">Bạn chưa nhập đủ thông tin</string>
+    <string name="toast_wrong_account_infomation">Sai thông tin tài khoản</string>
+    <string name="toast_check_null">Chưa nhập đủ thông tin</string>
+    <string name="toast_wrong_password">Sai mật khẩu</string>
+    <!--End Toast notification-->
+
+    <!--Start title tool bar-->
+    <string name="title_control_account">Control Account</string>
+    <string name="title_home">Home</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--End title tool bar-->
+</resources>

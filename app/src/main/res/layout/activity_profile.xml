@@ -5,34 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
-    tools:context=".ProfileActivity">
-
-    <RelativeLayout
-        android:id="@+id/rlProfile"
-        android:layout_width="match_parent"
-        android:background="@drawable/img_profile"
-        android:layout_height="200dp">
-
-        <TextView
-            android:id="@+id/username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="15dp"
-            android:textSize="18dp"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imgProfile"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        app:layout_anchor="@id/rlProfile"
-        app:civ_border_width="1dp"
-        app:civ_border_color="@color/colorWhite"
-        app:layout_anchorGravity="bottom|center" />
+    tools:context=".activities.ProfileActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,9 +19,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="5dp"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/custom_button"
             android:padding="8dp"
-            android:text="Gửi lời mời kết bạn"
+            android:text="@string/txt_btn_send_request_make_friend"
             android:textColor="@color/colorWhite" />
 
         <Button
@@ -57,27 +30,54 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="5dp"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/custom_button"
             android:padding="8dp"
-            android:text="Cancel"
+            android:text="@string/txt_btncancel"
             android:textColor="@color/colorWhite"
             android:visibility="invisible" />
 
         <TextView
-            android:textSize="20dp"
             android:id="@+id/txtIntroduce"
-            android:layout_margin="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/rlProfile"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/img_profile">
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="15dp"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnEdit"
-        android:src="@drawable/ic_edit_white_24dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end|right"
         android:layout_margin="10dp"
-        android:layout_gravity="bottom|end|right" />
+        android:src="@drawable/ic_edit_white_24dp" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgProfile"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:civ_border_color="@color/colorWhite"
+        app:civ_border_width="1dp"
+        app:layout_anchor="@id/rlProfile"
+        app:layout_anchorGravity="bottom|center" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,20 +23,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import gst.trainingcourse.appchatonline.R;
 import gst.trainingcourse.appchatonline.listener.ClickGroupView;
+import gst.trainingcourse.appchatonline.model.Account;
 import gst.trainingcourse.appchatonline.model.GroupChat;
+import gst.trainingcourse.appchatonline.model.Grouplist;
 
 public class GroupFragmentAdapter extends RecyclerView.Adapter<GroupFragmentAdapter.ViewHolder> {
 
     private Context mContext;
-    private ArrayList<String> mListGroup;
+    private ArrayList<Grouplist> mListGroup;
     private ClickGroupView mClick;
-    private String mImgUrl;
 
-    public GroupFragmentAdapter(Context mContext, ArrayList<String> mListGroup, ClickGroupView mClick, String mImgUrl) {
+    private FirebaseUser mFirebaseUser;
+    private DatabaseReference mReference;
+
+    public GroupFragmentAdapter(Context mContext, ArrayList<Grouplist> mListGroup, ClickGroupView mClick) {
         this.mContext = mContext;
         this.mListGroup = mListGroup;
         this.mClick = mClick;
-        this.mImgUrl = mImgUrl;
     }
 
     @NonNull
@@ -45,14 +50,39 @@ public class GroupFragmentAdapter extends RecyclerView.Adapter<GroupFragmentAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GroupFragmentAdapter.ViewHolder holder, int position) {
-        String s = mListGroup.get(position);
+    public void onBindViewHolder(@NonNull final GroupFragmentAdapter.ViewHolder holder, int position) {
+        Grouplist grouplist = mListGroup.get(position);
 
         lastMessage(holder.txtLastMessage, position);
 
-        holder.txtGroupName.setText(s);
-        if (!mImgUrl.equals("")) {
-            Picasso.with(mContext).load(mImgUrl).into(holder.imgGroup);
+        holder.txtGroupName.setText(grouplist.getGroupname());
+        if (!grouplist.getImgurl().equals("")) {
+            Picasso.with(mContext).load(grouplist.getImgurl()).into(holder.imgGroup);
+        }
+
+        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        mReference = FirebaseDatabase.getInstance().getReference("Users");
+        if (grouplist.getMember() != null) {
+            for (String id : grouplist.getMember()) {
+                if (id != null && !id.equals(mFirebaseUser.getUid())) {
+                    mReference.child(id).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Account account = dataSnapshot.getValue(Account.class);
+
+                            if (account.getStatus().contains("online")) {
+                                holder.imgOn.setVisibility(View.VISIBLE);
+                                holder.imgOff.setVisibility(View.GONE);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
         }
     }
 
@@ -63,7 +93,7 @@ public class GroupFragmentAdapter extends RecyclerView.Adapter<GroupFragmentAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView txtGroupName, txtLastMessage;
-        public CircleImageView imgGroup;
+        public CircleImageView imgGroup, imgOn, imgOff;
         public RelativeLayout itemGroup;
 
         View.OnClickListener clickView = new View.OnClickListener() {
@@ -80,6 +110,9 @@ public class GroupFragmentAdapter extends RecyclerView.Adapter<GroupFragmentAdap
             txtLastMessage = itemView.findViewById(R.id.lastMessage);
             imgGroup = itemView.findViewById(R.id.imgGroup);
             itemGroup = itemView.findViewById(R.id.itemViewGroup);
+            imgOn = itemView.findViewById(R.id.imgOn);
+            imgOff = itemView.findViewById(R.id.imgOff);
+
             itemGroup.setOnClickListener(clickView);
         }
     }
@@ -92,10 +125,17 @@ public class GroupFragmentAdapter extends RecyclerView.Adapter<GroupFragmentAdap
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     GroupChat groupChat = snapshot.getValue(GroupChat.class);
 
-                    if (groupChat.getGroupname().equals(mListGroup.get(position))) {
-                        textView.setText(groupChat.getMessage());
+                    if (groupChat.getGroupname().equals(mListGroup.get(position).getGroupname())) {
+                        if (groupChat.getType().equals("text")) {
+                            textView.setText(groupChat.getMessage());
+                        } else if (groupChat.getType().equals("image")) {
+                            textView.setText("New image");
+                        } else if (groupChat.getType().equals("audio")) {
+                            textView.setText("New audio");
+                        }
                     }
                 }
+
             }
 
             @Override

@@ -5,16 +5,18 @@ public class GroupChat {
     private String sender;
     private String groupname;
     private String imgurl;
+    private String type;
     private boolean isseen;
 
     public GroupChat() {
     }
 
-    public GroupChat(String message, String sender, String groupname, String imgurl, boolean isseen) {
+    public GroupChat(String message, String sender, String groupname, String imgurl, String type, boolean isseen) {
         this.message = message;
         this.sender = sender;
         this.groupname = groupname;
         this.imgurl = imgurl;
+        this.type = type;
         this.isseen = isseen;
     }
 
@@ -56,5 +58,13 @@ public class GroupChat {
 
     public void setIsseen(boolean isseen) {
         this.isseen = isseen;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

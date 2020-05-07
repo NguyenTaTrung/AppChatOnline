@@ -64,12 +64,15 @@ public class ControlAccountAdapter extends RecyclerView.Adapter<ControlAccountAd
         }
 
         if (mIsChat) {
-            if (account.getStatus().equals("online")) {
-                holder.imgOn.setVisibility(View.VISIBLE);
-                holder.imgOff.setVisibility(View.GONE);
-            } else {
-                holder.imgOn.setVisibility(View.GONE);
-                holder.imgOff.setVisibility(View.VISIBLE);
+            //cap nhap bi loi~
+            if (account.getStatus() != null) {
+                if (account.getStatus().equals("online")) {
+                    holder.imgOn.setVisibility(View.VISIBLE);
+                    holder.imgOff.setVisibility(View.GONE);
+                } else {
+                    holder.imgOn.setVisibility(View.GONE);
+                    holder.imgOff.setVisibility(View.VISIBLE);
+                }
             }
         } else {
             holder.imgOn.setVisibility(View.GONE);
@@ -123,7 +126,13 @@ public class ControlAccountAdapter extends RecyclerView.Adapter<ControlAccountAd
 
                         if (chat.getReceiver().equals(firebaseUser.getUid()) && chat.getSender().equals(userId) ||
                                 chat.getReceiver().equals(userId) && chat.getSender().equals(firebaseUser.getUid())) {
-                            last.setText(chat.getMessage());
+                            if (chat.getType().equals("text")) {
+                                last.setText(chat.getMessage());
+                            } else if (chat.getType().equals("image")){
+                                last.setText("New Image");
+                            } else if (chat.getType().equals("audio")) {
+                                last.setText("New Audio");
+                            }
                         }
                     }
                 }

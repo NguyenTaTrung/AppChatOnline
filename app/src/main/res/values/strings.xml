@@ -1,39 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--Start textview name-->
     <string name="app_name">AppChatOnline</string>
-    <string name="txt_login">Đăng nhập</string>
-    <string name="txt_username">Tài khoản</string>
-    <string name="txt_password">Mật Khẩu</string>
-    <string name="txt_telephone_number">Số điện thoại</string>
-    <string name="txt_hello">Xin chào</string>
-    <string name="choose_language">Chọn ngôn ngữ</string>
-    <string name="remember_information">Nhớ thông tin tài khoản</string>
-    <string name="txt_register">Đăng ký</string>
-    <string name="txt_back">Quay lại</string>
-    <string name="txt_confirm_password">Nhập lại mật khẩu</string>
-    <string name="txt_forgot_your_password">Bạn quên mật khẩu?</string>
-    <string name="txt_don_t_have_an_account">Bạn không có tài khoản:</string>
-    <string name="txt_register_here">Đăng ký!</string>
+    <string name="txt_login">Login</string>
+    <string name="txt_username">Account</string>
+    <string name="txt_password">Password</string>
+    <string name="txt_telephone_number">Telephone numbers</string>
+    <string name="txt_hello">Hello</string>
+    <string name="txt_register">Register</string>
+    <string name="txt_back">Back</string>
+    <string name="txt_confirm_password">Confirm password</string>
+    <string name="txt_forgot_your_password">Forgot your password?</string>
+    <string name="txt_don_t_have_an_account">You do not have an account:</string>
+    <string name="txt_register_here">Register here!</string>
     <string name="txt_ok">OK</string>
-    <string name="txt_dang_ky_thanh_cong">Đăng ký thành công!</string>
+    <string name="txt_register_success">Register Success!</string>
     <string name="txt_profile">Profile</string>
     <string name="txt_favourite">Favourite</string>
     <string name="txt_home">Home</string>
-    <string name="txt_sort">Sắp xếp</string>
+    <string name="txt_btn_send_request_make_friend">Send a friend request</string>
+    <string name="txt_btncancel">Cancel</string>
+    <string name="txt_btn_ok">OK</string>
+    <string name="txt_name_forgot_password">After clicking the Reset button, please check the Email registration to change the password</string>
+    <string name="txt_btn_reset">Reset</string>
+    <string name="remember_information">Remember account information</string>
+    <string name="txt_typing">typing...</string>
+    <!--End textview name-->
+
 
     <!--Start Toast notification-->
-    <string name="toast_account_already_exists">Tài khoản đã tồn tại</string>
-    <string name="toast_not_enough_information">Bạn chưa nhập đủ thông tin</string>
-    <string name="toast_wrong_account_infomation">Sai thông tin tài khoản</string>
-    <string name="toast_check_null">Chưa nhập đủ thông tin</string>
-    <string name="toast_wrong_password">Sai mật khẩu</string>
+    <string name="toast_account_already_exists">Account already exists</string>
+    <string name="toast_not_enough_information">You have not entered enough information</string>
+    <string name="toast_wrong_account_infomation">Wrong account information</string>
+    <string name="toast_wrong_password">Wrong password</string>
+    <string name="toast_have_not_select_friend">You haven\'t select friends</string>
+    <string name="toast_add_succesfully">Add Succesfully!</string>
+    <string name="toast_no_information_entered">No information entered</string>
+    <string name="toast_select_more_friend">You have select more than one friend</string>
+    <string name="toast_have_not_entered_email">You have not entered Email!</string>
+    <string name="toast_check_your_email">Please check your Email!</string>
+    <string name="toast_have_not_enter_name_group">You haven\'t enter name group</string>
+    <string name="toast_update_name_group_success">Update name group success</string>
+    <string name="toast_enter_the_content_of_the_chat">Enter the content of the chat!</string>
+    <string name="toast_fail">Fail!</string>
+    <string name="toast_check_null">Not enough information entered</string>
+    <string name="toast_have_not_enter_information">You have not entered enough information</string>
+    <string name="toast_login_fail">Login failed</string>
+    <string name="toast_update_image_success">Update avatar image successfully!</string>
+    <string name="toast_update_my_introduce_success">Update my introduce success</string>
+    <string name="toast_enter_email_fail">Email exists or is not formatted</string>
+    <string name="toast_check_password">Minimum password consists of 6 characters</string>
+    <string name="toast_alredy_exist_username">Already exist username!</string>
+    <string name="toast_check_connect">You must connect internet first!</string>
     <!--End Toast notification-->
 
     <!--Start title tool bar-->
     <string name="title_control_account">Control Account</string>
     <string name="title_home">Home</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--End title tool bar-->
+
+    <!--Start hint name edittext -->
+    <string name="hint_edittext_email">Email</string>
+    <string name="hint_edittext_name_group">Name group...</string>
+    <string name="hint_edittext_enter_email">Enter email...</string>
+    <string name="hint_edittext_type_a_message">Type a message...</string>
+    <!--End hint name edittext -->
+
+    <!--Start title menu-->
+    <string name="menu_title_my_profile">My Profile</string>
+    <string name="menu_title_logout">Logout</string>
+    <string name="menu_title_create">Create</string>
+    <string name="menu_title_add">Add</string>
+    <string name="menu_title_update_name_group">Update Name Group</string>
+    <string name="menu_title_update_image_group">Update Image Group</string>
+    <string name="menu_title_add_member">Add Member</string>
+    <string name="menu_title_leave_group">Leave Group</string>
+    <!--End title menu-->
+
 </resources>

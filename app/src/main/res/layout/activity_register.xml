@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".RegisterActivity">
+    tools:context=".activities.RegisterActivity">
 
     <TextView
         android:id="@+id/txtAppName"
@@ -15,75 +15,8 @@
         android:layout_marginTop="20dp"
         android:text="@string/app_name"
         android:textColor="#FF0000"
-        android:textSize="50dp"
+        android:textSize="40sp"
         android:transitionName="@string/app_name" />
-
-    <EditText
-        android:id="@+id/editTextName"
-        android:layout_width="275dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/custom_edittext"
-        android:drawableLeft="@drawable/ic_person_black_24dp"
-        android:drawablePadding="5dp"
-        android:hint="@string/txt_username"
-        android:inputType="text" />
-
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="275dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/custom_edittext"
-        android:drawableLeft="@drawable/ic_security_black_24dp"
-        android:drawablePadding="5dp"
-        android:hint="Email"
-        android:inputType="textEmailAddress" />
-
-    <EditText
-        android:id="@+id/editTextPass"
-        android:layout_width="275dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/custom_edittext"
-        android:drawableLeft="@drawable/ic_security_black_24dp"
-        android:drawablePadding="5dp"
-        android:hint="@string/txt_password"
-        android:inputType="textPassword"
-        android:transitionName="@string/txt_confirm_password" />
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp">
-
-        <Button
-            android:id="@+id/btnRegister"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="25dp"
-            android:background="@drawable/custom_button_login"
-            android:text="@string/txt_register"
-            android:textColor="#FFFF00"
-            android:textSize="20dp" />
-
-        <Button
-            android:id="@+id/btnBack"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="25dp"
-            android:background="@drawable/custom_button_login"
-            android:text="@string/txt_back"
-            android:textColor="#FFFF00"
-            android:textSize="20dp" />
-
-
-    </RelativeLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgUser"
@@ -92,9 +25,82 @@
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
         android:src="@drawable/ic_person_black_24dp"
+        app:civ_border_color="@color/colorBlack"
         app:civ_border_overlay="true"
-        app:civ_border_color="#000000"
         app:civ_border_width="2dp"
         app:civ_circle_background_color="#CCCCCC" />
+
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:autofillHints=""
+        android:background="@drawable/custom_edittext"
+        android:drawableStart="@drawable/ic_person_black_24dp"
+        android:drawablePadding="5dp"
+        android:hint="@string/txt_username"
+        android:inputType="text"
+        android:padding="10dp" />
+
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:autofillHints=""
+        android:background="@drawable/custom_edittext"
+        android:drawableStart="@drawable/ic_email_black_24dp"
+        android:drawablePadding="5dp"
+        android:hint="@string/hint_edittext_email"
+        android:inputType="textEmailAddress"
+        android:padding="10dp" />
+
+    <EditText
+        android:id="@+id/editTextPass"
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:autofillHints=""
+        android:background="@drawable/custom_edittext"
+        android:drawableStart="@drawable/ic_security_black_24dp"
+        android:drawablePadding="5dp"
+        android:hint="@string/txt_password"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:transitionName="@string/txt_confirm_password" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp">
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="25dp"
+            android:background="@drawable/custom_button"
+            android:text="@string/txt_register"
+            android:textColor="@color/colorYellow"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="25dp"
+            android:background="@drawable/custom_button"
+            android:text="@string/txt_back"
+            android:textColor="@color/colorYellow"
+            android:textSize="20sp" />
+
+
+    </RelativeLayout>
 
 </LinearLayout>

@@ -1,4 +1,4 @@
-package gst.trainingcourse.appchatonline.fragment;
+package gst.trainingcourse.appchatonline.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,15 +22,11 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import gst.trainingcourse.appchatonline.ProfileActivity;
+import gst.trainingcourse.appchatonline.activities.ProfileActivity;
 import gst.trainingcourse.appchatonline.R;
 import gst.trainingcourse.appchatonline.adapter.ControlAccountAdapter;
 import gst.trainingcourse.appchatonline.listener.ClickChatUser;
 import gst.trainingcourse.appchatonline.model.Account;
-
-//import android.support.annotation.NonNull;
-//import android.support.annotation.Nullable;
-//import android.support.v7.widget.LinearLayoutManager;
 
 public class UsersFragment extends Fragment {
 
@@ -78,6 +74,7 @@ public class UsersFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String s) {
+                if (mControlAccountAdapter != null)
                 mControlAccountAdapter.searchUser(s);
                 return false;
             }

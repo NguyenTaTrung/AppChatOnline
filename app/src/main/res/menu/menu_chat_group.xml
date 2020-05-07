@@ -2,16 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/updateName"
+        android:title="@string/menu_title_update_name_group"
+        app:showAsAction="never"/>
+
     <item android:id="@+id/updateImg"
-        android:title="Update Image Group"
+        android:title="@string/menu_title_update_image_group"
         app:showAsAction="never"/>
 
     <item android:id="@+id/addMember"
-        android:title="Add Member"
+        android:title="@string/menu_title_add_member"
         app:showAsAction="never"/>
 
     <item android:id="@+id/leaveGroup"
-        android:title="Leave Group"
+        android:title="@string/menu_title_leave_group"
         app:showAsAction="never"/>
 
 </menu>

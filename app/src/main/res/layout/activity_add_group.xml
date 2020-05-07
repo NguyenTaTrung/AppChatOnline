@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddGroupActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".activities.AddGroupActivity">
 
     <include
         android:id="@+id/toolBar"
@@ -15,11 +14,14 @@
         android:id="@+id/editTextNameGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Name group..." />
+        android:autofillHints=""
+        android:hint="@string/hint_edittext_name_group"
+        android:padding="10dp"
+        android:inputType="text" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewGroup"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

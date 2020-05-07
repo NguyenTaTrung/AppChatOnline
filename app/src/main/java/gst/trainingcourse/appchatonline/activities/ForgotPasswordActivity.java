@@ -1,4 +1,4 @@
-package gst.trainingcourse.appchatonline;
+package gst.trainingcourse.appchatonline.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,9 +12,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import gst.trainingcourse.appchatonline.R;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
@@ -38,14 +38,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 final String email = mEditTxtEmail.getText().toString().trim();
 
                 if (email.matches("")) {
-                    Toast.makeText(getApplicationContext(), "You have not entered Email!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.toast_have_not_entered_email, Toast.LENGTH_SHORT).show();
                 } else {
                     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                     firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(getApplicationContext(), "Please check your Email!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), R.string.toast_check_your_email, Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent();
                                 intent.putExtra("email", email);
                                 setResult(RESULT_OK, intent);
@@ -64,8 +64,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private void initView() {
         mToolBar = findViewById(R.id.toolBar);
         setSupportActionBar(mToolBar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        mToolBar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        getSupportActionBar().setTitle("Forgot pass word");
 
         mEditTxtEmail = findViewById(R.id.editTextEmail);
         mBtnReset = findViewById(R.id.btnReset);

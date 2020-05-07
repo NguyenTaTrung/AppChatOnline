@@ -1,4 +1,4 @@
-package gst.trainingcourse.appchatonline.fragment;
+package gst.trainingcourse.appchatonline.fragments;
 
 import gst.trainingcourse.appchatonline.notification.MyResponse;
 import gst.trainingcourse.appchatonline.notification.Sender;

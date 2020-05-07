@@ -1,8 +1,7 @@
-package gst.trainingcourse.appchatonline.fragment;
+package gst.trainingcourse.appchatonline.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import gst.trainingcourse.appchatonline.MessageActivity;
+import gst.trainingcourse.appchatonline.activities.MessageActivity;
 import gst.trainingcourse.appchatonline.R;
 import gst.trainingcourse.appchatonline.adapter.ControlAccountAdapter;
 import gst.trainingcourse.appchatonline.listener.ClickChatUser;
@@ -75,13 +74,10 @@ public class ChatsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mListIdUserChat.clear();
-
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Chatlist chatlist = snapshot.getValue(Chatlist.class);
-
                     mListIdUserChat.add(chatlist);
                 }
-
                 chatList();
             }
 
@@ -92,7 +88,6 @@ public class ChatsFragment extends Fragment {
         });
 
         updateToken(FirebaseInstanceId.getInstance().getToken());
-        Log.d("TAG", FirebaseInstanceId.getInstance().getToken());
     }
 
     private void updateToken(String token) {

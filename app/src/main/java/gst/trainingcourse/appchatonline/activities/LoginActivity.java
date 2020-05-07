@@ -1,9 +1,11 @@
-package gst.trainingcourse.appchatonline;
+package gst.trainingcourse.appchatonline.activities;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -19,6 +21,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import gst.trainingcourse.appchatonline.main.MainActivity;
+import gst.trainingcourse.appchatonline.R;
+import gst.trainingcourse.appchatonline.lib.CheckConnectionInternet;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -27,8 +32,12 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEditTextMail, mEditTextPass;
     private String mEmail, mPass;
     private TextView mTxtRegister, mTxtForgotPass;
+
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
+    private Dialog mDialog;
+    private CheckConnectionInternet mCheckConnectInternet = new CheckConnectionInternet(this);
+
     private static final int REQUEST_CODE_REGISTER = 1;
     private static final int REQUEST_CODE_FORGOTPASSS = 2;
 
@@ -39,12 +48,17 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         //auto đăng nhập..
-        mUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (mUser != null) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+        if (mCheckConnectInternet.isConnected()) {
+            mUser = FirebaseAuth.getInstance().getCurrentUser();
+            if (mUser != null) {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        } else {
+            //
         }
+
     }
 
     @Override
@@ -70,34 +84,41 @@ public class LoginActivity extends AppCompatActivity {
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEmail = mEditTextMail.getText().toString();
-                mPass = mEditTextPass.getText().toString();
+                if (mCheckConnectInternet.isConnected()) {
+                    mEmail = mEditTextMail.getText().toString();
+                    mPass = mEditTextPass.getText().toString();
+                    mDialog.show();
 
-                if (mEmail.matches("") || mPass.matches("")) {
-                    Toast.makeText(getApplicationContext(), "Bạn chưa nhập đủ thông tin", Toast.LENGTH_SHORT).show();
-                } else {
-                    mAuth = FirebaseAuth.getInstance();
-                    mAuth.signInWithEmailAndPassword(mEmail, mPass)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                        if (mCheckBox.isChecked()) {
-                                            mEditor.putString("email", mEmail);
-                                            mEditor.putString("password", mPass);
-                                            mEditor.commit();
+                    if (mEmail.matches("") || mPass.matches("")) {
+                        mDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), R.string.toast_have_not_enter_information, Toast.LENGTH_SHORT).show();
+                    } else {
+                        mAuth = FirebaseAuth.getInstance();
+                        mAuth.signInWithEmailAndPassword(mEmail, mPass)
+                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
+                                            if (mCheckBox.isChecked()) {
+                                                mEditor.putString("email", mEmail);
+                                                mEditor.putString("password", mPass);
+                                                mEditor.commit();
+                                            }
+                                            mDialog.dismiss();
+                                            finish();
+                                        } else {
+                                            mDialog.dismiss();
+                                            Toast.makeText(getApplicationContext(), R.string.toast_login_fail, Toast.LENGTH_SHORT).show();
                                         }
-                                        finish();
-                                    } else {
-                                        Toast.makeText(getApplicationContext(), "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
                                     }
-                                }
-                            });
+                                });
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.toast_check_connect, Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
@@ -149,6 +170,13 @@ public class LoginActivity extends AppCompatActivity {
         mCheckBox = findViewById(R.id.checkBoxInfo);
         mTxtRegister = findViewById(R.id.txtRegister);
         mTxtForgotPass = findViewById(R.id.txtForgotPassword);
+
+        mDialog = new Dialog(this);
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mDialog.setContentView(R.layout.dialog_loading);
+        TextView title = mDialog.findViewById(R.id.txtLogin);
+        title.setText("Waiting for login...");
+        mDialog.setCancelable(false);
 
         mEditTextMail.setText(mSharedPreferences.getString("email", ""));
         mEditTextPass.setText(mSharedPreferences.getString("password", ""));

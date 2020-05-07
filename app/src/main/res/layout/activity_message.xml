@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F7F2F2"
-    tools:context=".MessageActivity">
+    tools:context=".activities.MessageActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -20,29 +20,88 @@
             android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
             app:popupTheme="@style/MenuStyle">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profileImg"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+            <RelativeLayout
+                android:layout_width="40dp"
+                android:layout_height="40dp">
 
-            <TextView
-                android:id="@+id/username"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profileImg"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgOn"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:visibility="gone"
+                    app:civ_border_color="@color/colorStatus"
+                    app:civ_border_width="10dp" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgOff"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    app:civ_border_color="@color/colorGrey"
+                    app:civ_border_width="10dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:textColor="#FFF"
-                android:textStyle="bold" />
+                android:layout_marginStart="30dp">
+
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFF"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp"/>
+
+                <TextView
+                    android:id="@+id/typing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFF"
+                    android:textStyle="bold"
+                    android:text="@string/txt_typing"
+                    android:visibility="gone"
+                    android:layout_below="@id/username"/>
+
+            </RelativeLayout>
 
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerviewMessage"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/appBarLayout"
-        android:layout_above="@+id/rlMessage"/>
+        android:layout_above="@+id/rlMessage">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerviewMessage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnDownMes"
+            android:src="@drawable/ic_arrow_downward_white_24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:visibility="gone"
+            android:layout_margin="10dp"/>
+
+    </FrameLayout>
 
     <RelativeLayout
         android:id="@+id/rlMessage"
@@ -52,21 +111,62 @@
         android:background="@color/colorWhite"
         android:padding="5dp">
 
+        <ImageButton
+            android:id="@+id/btnCamera"
+            android:layout_centerVertical="true"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_photo_camera_black_24dp" />
+
+        <ImageButton
+            android:id="@+id/btnUpImage"
+            android:layout_centerVertical="true"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_toEndOf="@id/btnCamera"
+            android:background="@drawable/ic_image_black_24dp" />
+
+        <RelativeLayout
+            android:id="@+id/rlVoice"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/btnUpImage">
+
+            <ImageButton
+                android:id="@+id/btnVoice"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_keyboard_voice_black_24dp" />
+
+            <ImageButton
+                android:id="@+id/btnStopVoice"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_keyboard_voice_blue_24dp"
+                android:visibility="invisible"/>
+
+        </RelativeLayout>
+
         <EditText
             android:id="@+id/editTextMessage"
             android:background="@android:color/transparent"
             android:layout_width="match_parent"
             android:layout_centerVertical="true"
-            android:hint="Type a message..."
+            android:hint="@string/hint_edittext_type_a_message"
+            android:padding="10dp"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/btnSend" />
+            android:layout_toEndOf="@id/rlVoice"
+            android:lines="1"
+            android:layout_toStartOf="@+id/btnSend" />
 
         <ImageButton
             android:id="@+id/btnSend"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_centerVertical="true"
             android:background="@drawable/ic_send_black_24dp"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 

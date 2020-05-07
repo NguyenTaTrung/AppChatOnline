@@ -1,13 +1,16 @@
-package gst.trainingcourse.appchatonline;
+package gst.trainingcourse.appchatonline.activities;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,6 +38,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
+import gst.trainingcourse.appchatonline.R;
 import gst.trainingcourse.appchatonline.model.Account;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -43,6 +47,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mEditTextName, mEditTextPass, mEditTextEmail;
     private String mName, mPass, mEmail;
     private CircleImageView mCircleImageView;
+    private Dialog mDialog;
+
     private static final int REQUEST_CODE_IMAGE = 111;
 
     private FirebaseAuth mAuth;
@@ -56,14 +62,10 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         initView();
-
         mAuth = FirebaseAuth.getInstance();
         mStorage = FirebaseStorage.getInstance();
         mStorageReference = mStorage.getReferenceFromUrl("gs://appchattest-51e06.appspot.com");
-
         initAction();
-
-
     }
 
     private void register(final String username, String email, final String password) {
@@ -73,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Calendar calendar = Calendar.getInstance();
-                            StorageReference storageReference = mStorageReference.child("imagUser" + calendar.getTimeInMillis() + ".png");
+                            StorageReference storageReference = mStorageReference.child("imageUser/").child("imageUser" + calendar.getTimeInMillis() + ".png");
 
                             mCircleImageView.setDrawingCacheEnabled(true);
                             mCircleImageView.buildDrawingCache();
@@ -100,18 +102,19 @@ public class RegisterActivity extends AppCompatActivity {
                                             mReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
 
                                             //đẩy dữ liệu vào nhánh con userId có các thuộc tính id, username, imageUrl, status và values tương ứng (Hàm setValue)
-                                            Account account = new Account(userId, username, imgUrl, "offline","no introduce");
+                                            Account account = new Account(userId, username, imgUrl, "offline", false,"no introduce");
 
                                             mReference.setValue(account).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(Task<Void> task) {
                                                     if (task.isSuccessful()) {
-                                                        Toast.makeText(getApplicationContext(), "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getApplicationContext(), R.string.txt_register_success, Toast.LENGTH_SHORT).show();
                                                         Intent intent = new Intent();
                                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                                         intent.putExtra("email", mEmail);
                                                         intent.putExtra("password", mPass);
                                                         setResult(RESULT_OK, intent);
+                                                        mDialog.dismiss();
                                                         finish();
                                                     }
                                                 }
@@ -121,10 +124,27 @@ public class RegisterActivity extends AppCompatActivity {
                                 }
                             });
                         } else {
-                            Toast.makeText(getApplicationContext(), "Email tồn tại hoặc không đúng định dạnng", Toast.LENGTH_SHORT).show();
+                            mDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), R.string.toast_enter_email_fail, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+    }
+
+    private void initView() {
+        mEditTextName = findViewById(R.id.editTextName);
+        mEditTextPass = findViewById(R.id.editTextPass);
+        mEditTextEmail = findViewById(R.id.editTextEmail);
+        mButtonRegister = findViewById(R.id.btnRegister);
+        mButtonBack = findViewById(R.id.btnBack);
+        mCircleImageView = findViewById(R.id.imgUser);
+
+        mDialog = new Dialog(this);
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mDialog.setContentView(R.layout.dialog_loading);
+        TextView title = mDialog.findViewById(R.id.txtLogin);
+        title.setText("Waiting for register...");
+        mDialog.setCancelable(false);
     }
 
     private void initAction() {
@@ -136,17 +156,19 @@ public class RegisterActivity extends AppCompatActivity {
                 mEmail = mEditTextEmail.getText().toString().trim();
 
                 if (mName.matches("") || mPass.matches("") || mEmail.matches("")) {
-                    Toast.makeText(getApplicationContext(), "Bạn chưa nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.toast_have_not_enter_information, Toast.LENGTH_SHORT).show();
                 } else if (mPass.length() < 6) {
-                    Toast.makeText(getApplicationContext(), "Mật khẩu tối thiểu gồm 6 ký tự", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.toast_check_password, Toast.LENGTH_SHORT).show();
                 } else {
+                    mDialog.show();
                     mReference = FirebaseDatabase.getInstance().getReference("Users");
                     Query query = mReference.orderByChild("username").equalTo(mName);
-                    query.addValueEventListener(new ValueEventListener() {
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
-                                Toast.makeText(getApplicationContext(), "Already exist username!", Toast.LENGTH_SHORT).show();
+                                mDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), R.string.toast_alredy_exist_username, Toast.LENGTH_SHORT).show();
                             } else {
                                 register(mName, mEmail, mPass);
                             }
@@ -193,12 +215,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void initView() {
-        mEditTextName = findViewById(R.id.editTextName);
-        mEditTextPass = findViewById(R.id.editTextPass);
-        mEditTextEmail = findViewById(R.id.editTextEmail);
-        mButtonRegister = findViewById(R.id.btnRegister);
-        mButtonBack = findViewById(R.id.btnBack);
-        mCircleImageView = findViewById(R.id.imgUser);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

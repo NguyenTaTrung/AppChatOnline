@@ -1,4 +1,4 @@
-package gst.trainingcourse.appchatonline.fragment;
+package gst.trainingcourse.appchatonline.fragments;
 
 
 import android.content.Intent;
@@ -15,33 +15,38 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import gst.trainingcourse.appchatonline.AddGroupActivity;
-import gst.trainingcourse.appchatonline.GroupChatActivity;
+import gst.trainingcourse.appchatonline.activities.AddGroupActivity;
+import gst.trainingcourse.appchatonline.activities.GroupChatActivity;
 import gst.trainingcourse.appchatonline.R;
 import gst.trainingcourse.appchatonline.adapter.GroupFragmentAdapter;
 import gst.trainingcourse.appchatonline.listener.ClickGroupView;
+import gst.trainingcourse.appchatonline.model.Grouplist;
+import gst.trainingcourse.appchatonline.notification.Token;
 
 public class GroupFragment extends Fragment {
 
     private RecyclerView mRecyclerViewGroup;
     private FloatingActionButton mBtnAdd;
     private GroupFragmentAdapter mGroupFragmentAdapter;
-    private ArrayList<String> mListGroup = new ArrayList<>();
-    private String mImgUrl;
+    public static ArrayList<Grouplist> mList = new ArrayList<>();
+    private ArrayList<String> mListGroupName = new ArrayList<>();
     private ClickGroupView mClick = new ClickGroupView() {
         @Override
         public void onClickView(int position) {
+            Grouplist grouplist = mList.get(position);
             Intent intent = new Intent(getActivity(), GroupChatActivity.class);
-            intent.putExtra("groupName", mListGroup.get(position));
-            intent.putExtra("imgGroupUrl", mImgUrl);
+            intent.putExtra("groupName", grouplist.getGroupname());
+            intent.putExtra("imgGroupUrl", grouplist.getImgurl());
             startActivity(intent);
         }
     };
@@ -62,22 +67,39 @@ public class GroupFragment extends Fragment {
         mRecyclerViewGroup = view.findViewById(R.id.recyclerViewGroup);
         mBtnAdd = view.findViewById(R.id.btnAdd);
 
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Group");
-        databaseReference.child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mListGroup.clear();
+                mList.clear();
+                mListGroupName.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String groupName = snapshot.child("groupname").getValue(String.class);
-                    mImgUrl = snapshot.child("imgurl").getValue(String.class);
-                    mListGroup.add(groupName);
+                    Grouplist grouplist = snapshot.getValue(Grouplist.class);
+                    if (grouplist.getMember() != null) {
+                        for (String id : grouplist.getMember()) {
+                            if (id != null && id.equals(firebaseUser.getUid())) {
+                                mList.add(grouplist);
+                                mListGroupName.add(grouplist.getGroupname());
+                            }
+                        }
+                    }
                 }
-                mGroupFragmentAdapter = new GroupFragmentAdapter(getContext(), mListGroup, mClick, mImgUrl);
+                mGroupFragmentAdapter = new GroupFragmentAdapter(getContext(), mList, mClick);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 mRecyclerViewGroup.setLayoutManager(linearLayoutManager);
                 mRecyclerViewGroup.setAdapter(mGroupFragmentAdapter);
+
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("TokensGroup");
+                HashMap<String, Boolean> hashMap = new HashMap<>();
+                for (String id : mListGroupName) {
+                    if (id != null) {
+                        hashMap.put(id, true);
+                    }
+                }
+                Token token = new Token(FirebaseInstanceId.getInstance().getToken(), hashMap, FirebaseAuth.getInstance().getCurrentUser().getUid());
+                reference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(token);
             }
 
             @Override

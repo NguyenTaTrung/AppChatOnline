@@ -6,16 +6,18 @@ public class Account {
     private String username;
     private String imgUrl;
     private String status;
+    private boolean typing;
     private String introduce;
 
     public Account() {
     }
 
-    public Account(String id, String username, String imgUrl, String status, String introduce) {
+    public Account(String id, String username, String imgUrl, String status, boolean typing, String introduce) {
         this.id = id;
         this.username = username;
         this.imgUrl = imgUrl;
         this.status = status;
+        this.typing = typing;
         this.introduce = introduce;
     }
 
@@ -64,5 +66,13 @@ public class Account {
 
     public void setIntroduce(String introduce) {
         this.introduce = introduce;
+    }
+
+    public boolean isTyping() {
+        return typing;
+    }
+
+    public void setTyping(boolean typing) {
+        this.typing = typing;
     }
 }

@@ -1,30 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
+    android:id="@+id/rlMesLeft"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imgProfile"
-        android:layout_width="40dp"
-        android:layout_height="40dp" />
+    <RelativeLayout
+        android:id="@+id/rlMessage"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/showMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@+id/imgProfile"
-        android:background="@drawable/background_left"
-        android:padding="8dp" />
+        <ImageView
+            android:id="@+id/imgSend"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/background_left"
+            android:layout_toEndOf="@id/imgProfile"
+            android:padding="8dp" />
+
+        <TextView
+            android:id="@+id/showMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@+id/imgProfile"
+            android:background="@drawable/background_left"
+            android:padding="8dp" />
+
+        <RelativeLayout
+            android:id="@+id/rlAudio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_left"
+            android:padding="8dp"
+            android:layout_toEndOf="@+id/imgProfile">
+
+            <ImageButton
+                android:src="@drawable/ic_play_circle_outline_black_24dp"
+                android:id="@+id/btnPlay"
+                android:background="@android:color/transparent"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+
+            <SeekBar
+                android:id="@+id/skAudio"
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:layout_toEndOf="@id/btnPlay"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:id="@+id/txtDuration"
+                android:layout_toEndOf="@id/skAudio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:lines="1"/>
+
+        </RelativeLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgProfile"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/txtSeen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/showMessage"
+        android:layout_below="@id/rlMessage"
         android:gravity="center"
-        android:visibility="gone"
-        android:textColor="#CCCCCC"/>
+        android:textColor="@color/colorGrey"
+        android:visibility="gone" />
 
 </RelativeLayout>

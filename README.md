@@ -10,4 +10,8 @@
 -> SO DOWNLOAD NOW AND EXPERIENCE!
 
 2. IMAGE PREVIEW
-![anh 1](https://user-images.githubusercontent.com/45004246/81281862-9ea64100-9084-11ea-96be-0d8a9dacca43.png?raw=true)![anh 2](https://user-images.githubusercontent.com/45004246/81281876-a1a13180-9084-11ea-985c-0f66f0716013.png?raw=true)![anh 3](https://user-images.githubusercontent.com/45004246/81281899-a960d600-9084-11ea-913f-9c2bf31e01ea.png?raw=true)
+<p float="left">
+<img src="https://user-images.githubusercontent.com/45004246/81281862-9ea64100-9084-11ea-96be-0d8a9dacca43.png?raw=true" width="250"/>
+<img src="https://user-images.githubusercontent.com/45004246/81281876-a1a13180-9084-11ea-985c-0f66f0716013.png?raw=true" width="250"/>
+<img src="https://user-images.githubusercontent.com/45004246/81281899-a960d600-9084-11ea-913f-9c2bf31e01ea.png?raw=true" width="250"/>
+</p>
